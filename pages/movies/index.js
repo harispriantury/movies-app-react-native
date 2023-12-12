@@ -12,6 +12,7 @@ import {
   Text,
   View,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SearchBar } from "react-native-elements";
@@ -28,12 +29,13 @@ const images = {
 const pathMovie =
   "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&sort_by=popularity.desc&page=1&with_genres=";
 
-const Movies = () => {
+const Movies = ({ navigation }) => {
   const [param, setParam] = useState("");
   const [genres, setGenres] = useState([]);
   const [movies, setMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState(28);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
 
   const fetchGenre = () => {
     axios
@@ -48,7 +50,10 @@ const Movies = () => {
   };
   const fetchMovies = async (id) => {
     setLoading(true);
-    movieConfig.url = pathMovie + id;
+    const params = {
+      with_genres: id,
+    };
+    movieConfig.params = params;
     const {
       data: { results },
     } = await axios.request(movieConfig);
@@ -56,6 +61,24 @@ const Movies = () => {
       setMovies(results);
     }
     setLoading(false);
+    setPage(1);
+  };
+
+  const infiniteFetch = async (id) => {
+    setLoading(true);
+    const params = {
+      with_genres: id,
+      page: page,
+    };
+    movieConfig.params = params;
+    const {
+      data: { results },
+    } = await axios.request(movieConfig);
+    if (Array.isArray(results)) {
+      setMovies((prevState) => [...prevState, ...results]);
+    }
+    setLoading(false);
+    setPage(1);
   };
 
   const handleClickGenre = (item) => {
@@ -69,6 +92,12 @@ const Movies = () => {
   useEffect(() => {
     fetchMovies(selectedGenre);
   }, [selectedGenre]);
+
+  useEffect(() => {
+    if (page > 1) {
+      infiniteFetch(selectedGenre);
+    }
+  }, [page]);
 
   return (
     <ImageBackground style={styles.background} source={images}>
@@ -103,10 +132,12 @@ const Movies = () => {
         }}
         columnWrapperStyle={{ marginTop: 5 }}
         keyExtractor={(item, index) => index}
-        onEndReached={() => console.log("hello word")}
+        onEndReached={() => setPage(page + 1)}
+        onEndReachedThreshold={0.2}
         renderItem={({ item }) => {
           return (
             <MovieCard
+              handleClick={() => navigation.navigate("Detail", item)}
               imageSource={"http://image.tmdb.org/t/p/w500" + item.poster_path}
               title={item.original_title}
               releaseYear={item.release_date}

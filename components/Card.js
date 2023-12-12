@@ -1,17 +1,32 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import { Card } from "react-native-elements";
 import { colors } from "../constant/colors";
 
 const widthContaner = Dimensions.get("screen").width / 2 - 40;
 
-const MovieCard = ({ title, releaseYear, imageSource, description }) => {
+const MovieCard = ({
+  title,
+  releaseYear,
+  imageSource,
+  description,
+  handleClick,
+}) => {
   return (
     <Card containerStyle={styles.containerStyle}>
-      <Card.Image source={{ uri: imageSource }} style={styles.image} />
-      <Card.Title style={{ color: colors.white }}>{title}</Card.Title>
-      <Text style={styles.date}>Year: {releaseYear}</Text>
-      <Text style={styles.description}>{description}</Text>
+      <TouchableOpacity onPress={handleClick}>
+        <Card.Image source={{ uri: imageSource }} style={styles.image} />
+        <Card.Title style={{ color: colors.white }}>{title}</Card.Title>
+        <Text style={styles.date}>Year: {releaseYear}</Text>
+        <Text style={styles.description}>{description}</Text>
+      </TouchableOpacity>
     </Card>
   );
 };
