@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
+import { Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import { Card } from "react-native-elements";
 import { colors } from "../constant/colors";
 

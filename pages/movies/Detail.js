@@ -7,12 +7,12 @@ import {
 } from "react-native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Button } from "react-native-elements";
 import { colors } from "../../constant/colors";
+import { API_KEY } from "@env";
 
 const path = "http://image.tmdb.org/t/p/w500";
 const reviewPath =
-  "https://api.themoviedb.org/3/movie/uniqMovieID/reviews?api_key=faea0ae4c04809b0346ec5f61c8ec1ef";
+  "https://api.themoviedb.org/3/movie/uniqMovieID/reviews?api_key=" + API_KEY;
 
 const Detail = ({ route }) => {
   const [reviews, setReviews] = useState([]);
@@ -56,15 +56,6 @@ const Detail = ({ route }) => {
         </ScrollView>
       </View>
     </ImageBackground>
-
-    //  "overview": "When oil is discovered in 1920s Oklahoma under Osage Nation land, the Osage people are murdered one by one—until the FBI steps in to unravel the mystery.",
-    // "popularity": 2277.914,
-    // "poster_path": "/dB6Krk806zeqd0YNp2ngQ9zXteH.jpg",
-    // "release_date": "2023-10-18",
-    // "title": "Killers of the Flower Moon",
-    // "video": false,
-    // "vote_average": 7.7,
-    // "vote_count": 1296
   );
 };
 

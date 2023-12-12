@@ -2,32 +2,23 @@ import axios from "axios";
 
 import { headerGenre } from "../../config/genre";
 import { movieConfig } from "../../config/movie";
-import { imageConfig } from "../../config/image";
 
 import {
-  Button,
   ImageBackground,
   ScrollView,
   StyleSheet,
-  Text,
   View,
   FlatList,
-  TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SearchBar } from "react-native-elements";
 import MiniButton from "../../components/MiniButton";
-import Card from "../../components/Card";
-import CardComponent from "../../components/Card";
 import MovieCard from "../../components/Card";
-import { Dimensions } from "react-native";
+import { BEARER_TOKEN } from "@env";
 
 const images = {
   uri: "https://images.unsplash.com/photo-1581250505440-d813cad691a6?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 };
-
-const pathMovie =
-  "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&sort_by=popularity.desc&page=1&with_genres=";
 
 const Movies = ({ navigation }) => {
   const [param, setParam] = useState("");
@@ -146,17 +137,6 @@ const Movies = ({ navigation }) => {
           );
         }}
       />
-      {/* <ScrollView>
-        <View style={styles.cardContainer}>
-          {[1, 2, 3, 4, 5, 6].map((item) => {
-            return (
-              <View>
-                <MovieCard />
-              </View>
-            );
-          })}
-        </View>
-      </ScrollView> */}
     </ImageBackground>
   );
 };

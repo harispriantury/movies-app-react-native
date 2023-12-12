@@ -1,7 +1,5 @@
 import { StyleSheet, Text, Touchable, View } from "react-native";
-import { Button } from "react-native-elements";
 import React from "react";
-import { colors } from "../constant/colors";
 import { TouchableOpacity } from "react-native";
 
 const MiniButton = ({ text, handleClick, bgColor }) => {
